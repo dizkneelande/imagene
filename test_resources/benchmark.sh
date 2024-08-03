@@ -60,13 +60,13 @@ start=$(date +%s.%N)
     contrast:10 \
     rotate:right \
     crop:50,50,900,900 \
-    watermark:"Benchmark"\,\(0.5:0.1\)\,\(0.0:0.0:1.0:0.7\)\,\($FONT_PATH:0.1\) \
+    watermark:"Benchmark"\,\(0.5:0.5\)\,\(0.0:0.0:0.0:1.0\)\,\($FONT_PATH:0.5\) \
     flip:v \
     unsharpen:3.0,5 \
     invert:true \
     append:jigglypuff.jpg,right \
     resize:500,0 \
-    watermark:"Final"\,\(0.1:0.9\)\,\(1.0:1.0:1.0:0.8\)\,\($FONT_PATH:0.05\) \
+    watermark:"Final"\,\(0.5:0.5\)\,\(0.0:0.0:0.0:1.0\)\,\($FONT_PATH:0.5\) \
     out/benchmark_result.png
 end=$(date +%s.%N)
 runtime=$(awk "BEGIN {print $end - $start}")
