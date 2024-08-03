@@ -1,5 +1,7 @@
+
 /target/
 
+# Output directory for result images
 /test_resources/out/
 
 # Backup files
