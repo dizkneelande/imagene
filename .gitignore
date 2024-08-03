@@ -1,5 +1,7 @@
 /target/
 
+/test_resources/out/
+
 # Backup files
 **/*.rs.bk
 
