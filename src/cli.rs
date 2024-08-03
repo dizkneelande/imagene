@@ -207,7 +207,7 @@ Examples:
                     "format" => {
                         let format_arguments: Vec<&str> = v.split(",").collect();
                         if format_arguments.len() == 2 {
-                            Format(ImageOutputFormat::JPEG(
+                            Format(ImageOutputFormat::Jpeg(
                                 format_arguments[1]
                                     .to_owned()
                                     .parse::<u8>()
@@ -221,10 +221,10 @@ Examples:
                             ))
                         } else {
                             Format(match format_arguments[0] {
-                                "png" => ImageOutputFormat::PNG,
-                                "gif" => ImageOutputFormat::GIF,
-                                "bmp" => ImageOutputFormat::BMP,
-                                "ico" => ImageOutputFormat::ICO,
+                                "png" => ImageOutputFormat::Png,
+                                "gif" => ImageOutputFormat::Gif,
+                                "bmp" => ImageOutputFormat::Bmp,
+                                "ico" => ImageOutputFormat::Ico,
                                 &_ => {
                                     eprintln!("Invalid value for format");
                                     exit(2)
