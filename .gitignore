@@ -1,7 +1,5 @@
 /target/
 
-Cargo.lock
-
 # Backup files
 **/*.rs.bk
 
