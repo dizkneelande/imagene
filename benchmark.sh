@@ -33,7 +33,7 @@ run_benchmark "./imagene jigglypuff.jpg brightness:20 contrast:10 bright_contras
 run_benchmark "./imagene jigglypuff.jpg rotate:right flip:h rotated_flipped_jigglypuff.png"
 
 # Adding a watermark 
-run_benchmark "./imagene jigglypuff.jpg watermark:\"Pokemon\"\,\(0.1:0.9\)\,\(1.0:1.0:1.0:0.5\)\,\($FONT_PATH:0.1\) watermarked_jigglypuff.png"
+run_benchmark "./imagene jigglypuff.jpg watermark:\"Pokemon\"\,\(0.5:0.5\)\,\(0.0:0.0:0.0:1.0\)\,\($FONT_PATH:0.5\) watermarked_jigglypuff.png"
 
 # Cropping
 run_benchmark "./imagene jigglypuff.jpg crop:100,100,300,300 cropped_jigglypuff.png"
