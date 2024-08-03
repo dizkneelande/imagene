@@ -27,7 +27,7 @@ fi
 run_benchmark "../target/release/imagene jigglypuff.jpg resize:500,0 out/resized_jigglypuff.png"
 
 # Applying a blur effect
-run_benchmark "../target/release/imagene jigglypuff.jpg blur:20.0 out/blurred_jigglypuff.png"
+run_benchmark "../target/release/imagene jigglypuff.jpg blur:5.0 out/blurred_jigglypuff.png"
 
 # Adjusting brightness and contrast
 run_benchmark "../target/release/imagene jigglypuff.jpg brightness:20 contrast:10 out/bright_contrast_jigglypuff.png"
