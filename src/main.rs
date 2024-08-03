@@ -3,8 +3,9 @@ extern crate image;
 mod action;
 mod cli;
 use image::*;
-use std::collections::HashMap;
 use std::fs::File;
+use std::io::Write;
+use std::collections::HashMap;
 use std::process::exit;
 use std::sync::mpsc;
 
@@ -39,25 +40,30 @@ fn main() {
     let outname = io.1.clone().to_owned();
     let gutted_outname: Vec<&str> = outname.split(".").collect();
     let out_format = match gutted_outname[gutted_outname.len() - 1] {
-        "png" => ImageOutputFormat::PNG,
-        "jpg" => ImageOutputFormat::JPEG(100),
-        "jpeg" => ImageOutputFormat::JPEG(100),
-        "bmp" => ImageOutputFormat::BMP,
-        "gif" => ImageOutputFormat::GIF,
-        "ico" => ImageOutputFormat::ICO,
-        &_ => ImageOutputFormat::PNG,
+        "png" => ImageOutputFormat::Png,
+        "jpg" => ImageOutputFormat::Jpeg(100),
+        "jpeg" => ImageOutputFormat::Jpeg(100),
+        "bmp" => ImageOutputFormat::Bmp,
+        "gif" => ImageOutputFormat::Gif,
+        "ico" => ImageOutputFormat::Ico,
+        &_ => ImageOutputFormat::Png,
     };
 
     let (image, out_format) =
         action::apply_actions(&io.0, out_format, settings.actions, settings.flags, images);
 
     match io.1.as_ref() {
-        "stdout" => image
-            .write_to(&mut std::io::stdout(), out_format)
-            .unwrap_or_else(|e| {
-                eprintln!("Failed to save image: {}", e);
-                exit(2)
-            }),
+        "stdout" => {
+    	    let mut buffer = Vec::new();
+    	    image.write_to(&mut std::io::Cursor::new(&mut buffer), out_format).unwrap_or_else(|e| {
+        	eprintln!("Failed to encode image: {}", e);
+        	exit(2)
+    	    });
+    	    std::io::stdout().write_all(&buffer).unwrap_or_else(|e| {
+        	eprintln!("Failed to write image to stdout: {}", e);
+        	exit(2)
+    	    });
+        },
         _ => image
             .write_to(
                 &mut File::create(&io.1).unwrap_or_else(|_| {
