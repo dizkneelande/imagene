@@ -156,20 +156,20 @@ pub fn apply_actions(
 
                 match direction {
                     Direction::Up => {
-                        parent.copy_from(&image_to_append, 0, 0);
-                        parent.copy_from(&image, 0, image_to_append.height());
+                        let _ = parent.copy_from(&image_to_append, 0, 0);
+                        let _ = parent.copy_from(&image, 0, image_to_append.height());
                     }
                     Direction::Down => {
-                        parent.copy_from(&image, 0, 0);
-                        parent.copy_from(&image_to_append, 0, image.height());
+                        let _ = parent.copy_from(&image, 0, 0);
+                        let _ = parent.copy_from(&image_to_append, 0, image.height());
                     }
                     Direction::Left => {
-                        parent.copy_from(&image_to_append, 0, 0);
-                        parent.copy_from(&image, image_to_append.width(), 0);
+                        let _ = parent.copy_from(&image_to_append, 0, 0);
+                        let _ = parent.copy_from(&image, image_to_append.width(), 0);
                     }
                     Direction::Right => {
-                        parent.copy_from(&image, 0, 0);
-                        parent.copy_from(&image_to_append, image.width(), 0);
+                        let _ = parent.copy_from(&image, 0, 0);
+                        let _ = parent.copy_from(&image_to_append, image.width(), 0);
                     }
                 }
                 image = parent;
