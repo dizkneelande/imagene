@@ -81,9 +81,9 @@ pub fn apply_actions(
             Action::Scale(w, h) => {
                 // Grab which algorithm to use from flag
                 let algorithm = if cli::flag_is_enabled(flags.get(&Flag::Lanczos3)) {
-                    Lanczos3
+                    FilterType::Lanczos3
                 } else {
-                    Nearest
+                    FilterType::Nearest
                 };
                 if w == 0 {
                     image = image.resize(std::u32::MAX, h, algorithm);
@@ -115,9 +115,9 @@ pub fn apply_actions(
             Action::Append(filename, direction) => {
                 // Grab which algorithm to use from flag
                 let algorithm = if cli::flag_is_enabled(flags.get(&Flag::Lanczos3)) {
-                    Lanczos3
+                    FilterType::Lanczos3
                 } else {
-                    Nearest
+                    FilterType::Nearest
                 };
 
                 // The appendable image can either be same as source, an image that hasn't been
