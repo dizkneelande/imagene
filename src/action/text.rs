@@ -2,8 +2,8 @@ extern crate image;
 extern crate imageproc;
 extern crate rusttype;
 
-use image::{DynamicImage, GenericImageView, ImageRgba8};
-use rusttype::FontCollection;
+use image::{DynamicImage, Rgba};
+use rusttype::Font;
 
 use std::fs;
 
