@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Create the output directory if it doesn't exist
+# Create the output directory
 mkdir -p out
 
 # Define the font path as a variable
@@ -49,25 +49,3 @@ run_benchmark "../target/release/imagene jigglypuff.jpg resize:400,0 blur:2.0 br
 
 # Outputting to stdout (for piping to other programs)
 run_benchmark "../target/release/imagene jigglypuff.jpg resize:200,0 stdout > out/small_jigglypuff.png"
-
-# Complex pipeline for benchmarking
-echo "Running complex pipeline for benchmarking"
-start=$(date +%s.%N)
-../target/release/imagene jigglypuff.jpg \
-    resize:1000,0 \
-    blur:3.0 \
-    brightness:15 \
-    contrast:10 \
-    rotate:right \
-    crop:50,50,900,900 \
-    watermark:"Benchmark"\,\(0.5:0.5\)\,\(0.0:0.0:0.0:1.0\)\,\($FONT_PATH:0.5\) \
-    flip:v \
-    unsharpen:3.0,5 \
-    invert:true \
-    append:jigglypuff.jpg,right \
-    resize:500,0 \
-    watermark:"Final"\,\(0.5:0.5\)\,\(0.0:0.0:0.0:1.0\)\,\($FONT_PATH:0.5\) \
-    out/benchmark_result.png
-end=$(date +%s.%N)
-runtime=$(awk "BEGIN {print $end - $start}")
-echo "Complex pipeline execution time: $runtime seconds"
