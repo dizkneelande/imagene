@@ -2,13 +2,13 @@ extern crate image;
 extern crate imageproc;
 extern crate rusttype;
 
-use image::{DynamicImage, Rgba};
+use image::{DynamicImage, Rgba, RgbaImage};
 use rusttype::Font;
 
 use std::fs;
 
 pub fn draw(
-    mut image: DynamicImage, // Taking ownership is fine since it returns it back
+    image: DynamicImage, // No need for `mut` here as we're converting it
     rgba: (u8, u8, u8, u8),
     font: &str,
     (x, y): (f32, f32),
@@ -24,16 +24,21 @@ pub fn draw(
         Ok(f) => f,
     };
     let (w, h) = (image.width() as f32, image.height() as f32);
+    
+    // Convert image to RGBA8
+    let mut rgba8_image: RgbaImage = image.to_rgba8();
+    
     imageproc::drawing::draw_text_mut(
-    	image.as_mut_rgba8().unwrap(),
-    	color,
-    	(w * x) as i32,
-    	(h * y) as i32,
-    	rusttype::Scale::uniform(w as f32 * (scale * 0.1)),
+        &mut rgba8_image,
+        color,
+        (w * x) as i32,
+        (h * y) as i32,
+        rusttype::Scale::uniform(w as f32 * (scale * 0.1)),
         &font,
         text,
     );
-    image
+    
+    DynamicImage::ImageRgba8(rgba8_image)
 }
 
 fn load_font(name: &str) -> Result<Font<'static>, ()> {
