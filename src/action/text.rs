@@ -15,9 +15,7 @@ pub fn draw(
     scale: f32,
     text: &str,
 ) -> DynamicImage {
-    let color = image::Rgba {
-        data: [rgba.0, rgba.1, rgba.2, rgba.3],
-    };
+    let color = Rgba([rgba.0, rgba.1, rgba.2, rgba.3]);
     let font = match load_font(&font) {
         Err(e) => {
             eprintln!("{:?}", e);
@@ -26,33 +24,22 @@ pub fn draw(
         Ok(f) => f,
     };
     let (w, h) = (image.width() as f32, image.height() as f32);
-    ImageRgba8(imageproc::drawing::draw_text(
-        &mut image,
-        color,
-        (w * x) as u32,
-        (h * y) as u32,
-        rusttype::Scale::uniform(w as f32 * (scale * 0.1)),
+    imageproc::drawing::draw_text_mut(
+    	image.as_mut_rgba8().unwrap(),
+    	color,
+    	(w * x) as i32,
+    	(h * y) as i32,
+    	rusttype::Scale::uniform(w as f32 * (scale * 0.1)),
         &font,
         text,
-    ))
+    );
+    image
 }
 
-fn load_font(name: &str) -> Result<rusttype::Font, ()> {
+fn load_font(name: &str) -> Result<Font<'static>, ()> {
     let bytes = fs::read(name).map_err(|e| {
         eprintln!("loading {}: {}", name, e);
-    });
-    if bytes.is_err() {
-        return Err(());
-    }
+    })?;
 
-    Ok(FontCollection::from_bytes(bytes.unwrap())
-        .map_err(|e| {
-            eprintln!("{}", e);
-        })
-        .unwrap()
-        .into_font()
-        .map_err(|e| {
-            eprintln!("{}", e);
-        })
-        .unwrap())
+    Font::try_from_vec(bytes).ok_or(())
 }
