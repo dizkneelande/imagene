@@ -2,7 +2,7 @@ extern crate image;
 extern crate imageproc;
 
 use crate::cli;
-use image::{DynamicImage, FilterType::*, GenericImage, GenericImageView, ImageOutputFormat};
+use image::{DynamicImage, GenericImage, imageops::FilterType, ImageOutputFormat};
 use std::{collections::HashMap, sync::mpsc};
 
 mod text;
